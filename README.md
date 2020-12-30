@@ -7,7 +7,7 @@ Make sure you have installed and configured docker in your environment. After th
 
 Create **docker-compose.yaml**
 
-```console
+```yaml
 version: '3.4'
 
 services:
@@ -31,4 +31,6 @@ networks:
     driver: bridge
 
 ```
+
+
 
