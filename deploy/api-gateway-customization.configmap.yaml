@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-gateway-customization
+  labels:
+    app: api-gateway
+data:
+  default-error-page.conf: | 
+    error_page 404 = /error404.$extension_by_http_accept;
+    error_page 401 = /error401.$extension_by_http_accept;
+
+    location /error404.json {
+      include /etc/nginx/customization.d/header-debug.conf;
+      return 404 $content_404;
+    }
+
+    location /error404.html {
+      include /etc/nginx/customization.d/header-debug.conf;
+      return 404 $content_404;
+    }
+
+    location /error401.json {
+      include /etc/nginx/customization.d/header-debug.conf;
+      return 401 $content_401;
+    }
+
+    location /error401.html {
+      include /etc/nginx/customization.d/header-debug.conf;
+      return 401 $content_401;
+    }
+  header-debug.conf: |
+    add_header 'X-Debug-Proxy-Name'     $original_request_method-$proxy_name    always;
+    add_header 'X-Debug-Proxy-Version'  $original_request_method-$proxy_version always;
+    add_header 'X-Debug-Proxy-Prefix'   $original_request_method-$proxy_prefix  always;
+    add_header 'X-Debug-Proxy-URL'      $original_request_method-$proxy_url     always;
+  maps-http-accept-extension.conf: |
+    map $http_accept $extension_by_http_accept {
+      default "html";
+      "~json" "json";
+    }
+  maps-original-request-uri.conf: |
+    map $original_request_uri$is_args$args $original_request_uri$is_args$args {
+      default "$original_request_uri$is_args$args";
+      "~^(?<path>.*)\?" "$path";
+    }
+  maps-proxyName.conf: |
+    map $original_request_method-$original_request_uri $proxy_name {
+      default "not_found";
+
+      "~^\w+-/v[0-9]+/customers([\/\?].*|$)$" "customer";
+      "~^\w+-/v[0-9]+/contracts([\/\?].*|$)$" "contract";
+    }
+  maps-proxyPrefix.conf: |
+    map $original_request_method-$original_request_uri $proxy_prefix {
+      default "/api/";   
+    }
+  maps-proxyUrl.conf: |
+    map $original_request_method-$original_request_uri$is_args$args $proxy_url {
+      default $original_request_uri$is_args$args;
+
+      "~^\w+-/v[0-9]+(?<path>[/?].*|$)$" "$path";
+    }
+  maps-proxyVersion.conf: |
+    map $original_request_method-$original_request_uri $proxy_version {
+      default "v1";
+
+      "~^\w+-/(?<version>v[0-9]+)/customers([\/\?].*|$)$" "$version";
+      "~^\w+-/(?<version>v[0-9]+)/contracts([\/\?].*|$)$" "$version";
+    }
+  maps-type.conf: |
+    map $http_accept $type {
+      default "text/html";
+      "~json" "application/json";
+    }
