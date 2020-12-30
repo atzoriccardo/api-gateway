@@ -1,5 +1,6 @@
 # Microservices API Gateway 
 
+Microservices API Gateway built with Nginx.
 
 ## Getting Started
 
@@ -32,5 +33,31 @@ networks:
 
 ```
 
+Now, you can run the following command
+
+```shell
+docker-compose up -d
+```
+
+It's important to create a **bridge** network type, during development,
+TODO: Continuare. 
 
 
+## Configuration
+
+By default only one location is exposed.
+
+```nginx
+
+include /etc/nginx/customization.d/default-error-page.conf;
+
+location / {
+    include /etc/nginx/customization.d/header-debug.conf;
+    include /etc/nginx/set_proxy_headers.conf;
+    
+    proxy_pass http://$proxy_name$proxy_prefix$proxy_version$proxy_url;
+}
+
+```
+
+As can be seen in the image above
