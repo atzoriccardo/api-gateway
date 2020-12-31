@@ -3,12 +3,12 @@ services:
 
 before_script:
   - docker login -u "$DOCKER_HUB_USERNAME" -p "$DOCKER_HUB_PASSWORD"
+  - echo $TRAVIS_TAG
 
 jobs:
   include:
     - stage: Build Docker Image
       script:
-        - echo $TRAVIS_TAG
         - docker build -t api-gateway:1.0.0 .
 
 branches:
