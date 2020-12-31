@@ -9,8 +9,7 @@ before_script:
 
 deploy:
   provider: script
-  script: bash docker_push
+  script: bash docker_push.sh
   on:
-    branch: dev
     tags: true
 
