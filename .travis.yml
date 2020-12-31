@@ -9,5 +9,8 @@ deploy:
   provider: script
   script: bash docker_push
   on:
-    branch: dev
     tags: true
+
+branches:
+  only:
+    - test
