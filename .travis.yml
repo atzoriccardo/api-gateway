@@ -19,5 +19,5 @@ jobs:
         - docker push "$DOCKER_HUB_IMAGE_NAME":"$API_GATEWAY_TAG"
       branches:
           only:
-            - "master"
+            - "main"
         
