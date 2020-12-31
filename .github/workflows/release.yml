@@ -2,8 +2,6 @@ name: api-gateway-release
 
 on:
   push:
-    branches:
-      - "dev"
     tags:
       - '*'
 
@@ -14,10 +12,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v1
+      - name: Login to Docker Hub
+        uses: docker/build-push-action@v2
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-          repository: ${{ secrets.DOCKER_HUB_IMAGE_NAME }}
-          tag_with_ref: true
+
+      - name: Build and Push 
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: riccardoatzori/api-gateway:latest
