@@ -6,7 +6,7 @@ on:
       - '*'
 
 jobs:
-  Push to Registry:
+  PushtoRegistry:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
