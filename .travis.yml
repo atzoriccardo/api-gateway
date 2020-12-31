@@ -17,9 +17,8 @@ jobs:
         - docker build -t "$IMAGE_NAME":"$API_GATEWAY_TAG" .
         - docker tag "$IMAGE_NAME":"$API_GATEWAY_TAG" "$DOCKER_HUB_IMAGE_NAME":"$API_GATEWAY_TAG"
         - docker push "$DOCKER_HUB_IMAGE_NAME":"$API_GATEWAY_TAG"
-      branches:
-          only:
-            - "main"
-          except:
-            - "dev"
+
+branches:
+  only:
+    - "main"
         
