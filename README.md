@@ -45,7 +45,7 @@ TODO: Continuare.
 
 ## Configuration
 
-By default only one location is exposed. 
+By default only one location is exposed.
 
 ```nginx
 
