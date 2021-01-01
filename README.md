@@ -1,6 +1,8 @@
 # Microservices API Gateway 
 
-Microservices API Gateway built with Nginx.
+Microservices API Gateway built with Nginx
+
+![Api Gateway](https://github.com/riccardoAtzori91/api-gateway/workflows/api-gateway-release/badge.svg)
 
 ## Getting Started
 
