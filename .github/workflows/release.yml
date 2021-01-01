@@ -1,4 +1,4 @@
-name: api-gateway-release
+name: api-gateway
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - '*'
 
 jobs:
-  api-gateway-release:
+  api-gateway:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
